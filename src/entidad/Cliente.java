@@ -20,6 +20,9 @@ public class Cliente {
 	private String telefono;
 	private boolean estado;
 	
+	public Cliente() {};
+	
+	
 	public Cliente(int idCliente, Usuario usuario, String dni, String cuil, String nombre, String apellido, String sexo,
 			String nacionalidad, LocalDate fechaNacimiento, String direccion, String localidad, String provincia,
 			String mail, String telefono) {
@@ -108,8 +111,8 @@ public class Cliente {
 		return fechaNacimiento;
 	}
 
-	public void setFechaNacimiento(LocalDate fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
+	public void setFechaNacimiento(LocalDate string) {
+		this.fechaNacimiento = string;
 	}
 
 	public String getDireccion() {
@@ -159,5 +162,26 @@ public class Cliente {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+
+
+	public void setFechaNacimiento1(String string) {
+			//asumo que la fecha está en formato "yyyy-MM-dd"
+		if (string != null && !string.isEmpty()) { //si el string no es nulo o vacío
+			String[] parts = string.split("-"); // dividir el string por el guión
+			if (parts.length == 3) { // si hay tres partes dia, mes y año
+				int year = Integer.parseInt(parts[0]); // convirto la primera parte a entero (año)
+				int month = Integer.parseInt(parts[1]);// convirto la segunda parte a entero (mes)
+				int day = Integer.parseInt(parts[2]); // convvierto la tercera parte a entero (día)
+				this.fechaNacimiento = LocalDate.of(year, month, day);// creo un objeto LocalDate con el año, mes y día
+			} else { 
+				throw new IllegalArgumentException("Fecha de nacimiento debe estar en formato yyyy-MM-dd"); //sino, excepción
+			}
+		} else {
+			this.fechaNacimiento = null; //
+		}
+		
+	}
+
+
 	
 }
