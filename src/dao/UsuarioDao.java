@@ -2,6 +2,7 @@ package dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -15,8 +16,39 @@ public class UsuarioDao {
 	private String pass ="root";
 	private String dbName ="banco_db";
 	
-	public int agregarUsuario(Usuario u) {
+	public String verificarUsuario(Usuario usuario) {
+		try {
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e){
+			e.printStackTrace();
+		}
 		
+		Connection cn = null;
+		
+		try {
+			cn = DriverManager.getConnection(host+dbName, user, pass);
+			String query = "SELECT contrasenaUsuario FROM Usuarios WHERE nombreUsuario = ?";
+			PreparedStatement pst = cn.prepareStatement(query);
+			pst.setString(1, usuario.getNombreUsuario());
+			ResultSet rs = pst.executeQuery();
+			if (!rs.next() ) {
+			    return "El usuario no existe.";
+			}
+			
+			String contrasena = rs.getString("contrasenaUsuario");
+		    if (!contrasena.equals(usuario.getContrasenaUsuario())) {
+		        return "La contraseña es incorrecta.";
+		    }
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Error de base de datos.";
+		}
+		
+		return null;
+	}
+
+	public int agregarUsuario(Usuario u) {
+
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e){
@@ -26,10 +58,13 @@ public class UsuarioDao {
 		Connection cn = null;
 		int filas = 0;
 		try {
-			String query = "insert into Usuarios(nombreUsuario, contrasenaUsuario, tipoUsuario) values ('"+u.getNombreUsuario()+"','"+u.getContrasenaUsuario()+"', '"+u.getTipoUsuario()+"')"; 
 			cn = DriverManager.getConnection(host+dbName, user, pass);
-			Statement st = cn.createStatement();
-			filas = st.executeUpdate(query);
+			String query = "INSERT INTO Usuarios(nombreUsuario, contrasenaUsuario, tipoUsuario) values (?,?,?)";
+			PreparedStatement pst = cn.prepareStatement(query);
+			pst.setString(1, u.getNombreUsuario());
+			pst.setString(1, u.getContrasenaUsuario());
+			pst.setString(1, u.getTipoUsuario());
+			filas = pst.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -47,10 +82,11 @@ public class UsuarioDao {
 		Connection cn = null;
 		int filas = 0;
 		try {
-			String query = "update Usuarios set estado=0 where idUsuario="+u.getIdUsuario();
 			cn = DriverManager.getConnection(host+dbName, user, pass);
-			Statement st = cn.createStatement();
-			filas = st.executeUpdate(query);
+			String query = "UPDATE Usuarios SET estado=0 WHERE idUsuario=?";
+			PreparedStatement pst = cn.prepareStatement(query);
+			pst.setInt(1, u.getIdUsuario());
+			filas = pst.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,11 +104,15 @@ public class UsuarioDao {
 		Connection cn = null;
 		int filas = 0;
 		try {
-			String query = "update Usuarios set nombreUsuario='"+u.getNombreUsuario()+"', "
-					+ "contrasenaUsuario='"+u.getContrasenaUsuario()+"', tipoUsuario='"+u.getTipoUsuario()+"', estado="+u.getEstado()+" where idUsuario="+u.getIdUsuario();
 			cn = DriverManager.getConnection(host+dbName, user, pass);
-			Statement st = cn.createStatement();
-			filas = st.executeUpdate(query);
+			String query = "UPDATE Usuarios SET nombreUsuario=?, contrasenaUsuario=?, tipoUsuario=?, estado=? WHERE idUsuario=?";
+			PreparedStatement pst = cn.prepareStatement(query);
+			pst.setString(1, u.getNombreUsuario());
+			pst.setString(2, u.getContrasenaUsuario());
+			pst.setString(3, u.getTipoUsuario());
+			pst.setBoolean(4, u.getEstado());
+			pst.setInt(5, u.getIdUsuario());
+			filas = pst.executeUpdate();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
