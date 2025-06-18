@@ -1,8 +1,11 @@
 package servlets;
 
 import java.io.IOException;
+<<<<<<< HEAD
 import java.util.ArrayList;
 
+=======
+>>>>>>> 3028d39 (ultimos cambios)
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -43,7 +46,11 @@ public class ServletLogin extends HttpServlet {
 	            HttpSession session = request.getSession();
 	            session.setAttribute("usuario", usuario);
 				
+<<<<<<< HEAD
 				RequestDispatcher rd = request.getRequestDispatcher("/Home.jsp");
+=======
+				RequestDispatcher rd = request.getRequestDispatcher("/home.jsp");
+>>>>>>> 3028d39 (ultimos cambios)
 				rd.forward(request, response);
 			}
 		}

@@ -12,15 +12,25 @@
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
 </style>
+<<<<<<< HEAD
 _
 <title>Home</title>
 
 </head>
 <body>--
+=======
+
+<title>Home</title>
+
+</head>
+<body>
+
+>>>>>>> 3028d39 (ultimos cambios)
 <jsp:include page="Menu.html"></jsp:include>
 
 <div class="encabezado"></div>
 
+<<<<<<< HEAD
 <div class="d-none d-lg-block bg-dark text-white position-fixed h-100" style="width: 250px;">
   <h4 class="p-3">BancoApp</h4>
   <div class="list-group list-group-flush">
@@ -50,6 +60,42 @@ _
 
 
 <jsp:include page="VistaCliente.jsp"></jsp:include>
+=======
+<div class="parteIzq">
+
+		<div class="menu">
+					<ul>
+						<li><a href="login.jsp">Iniciar sesión</a></li>
+						<li><a href="Home.jsp?vista=cliente">Cliente</a></li>	
+						<li><a href="Home.jsp?vista=prestamos">Prestamos</a></li>
+						<li><a href="Home.jsp?vista=tranferencia">Tranferencias</a></li>
+					</ul>
+		</div>
+
+</div>
+<div class="parteDer"> 
+
+<%
+    String vista = request.getParameter("vista");
+    if ("cliente".equals(vista)) {
+%>
+    <jsp:include page="Vistas\VistaCliente.jsp"></jsp:include>
+<%
+    } else if ("prestamos".equals(vista)) {
+%>
+    <jsp:include page="Vistas\VistaPrestamos.jsp"></jsp:include>
+<%
+    } else if ("tranferencia".equals(vista)) {
+%>
+    <jsp:include page="Vistas\VistaTranferencia.jsp"></jsp:include>
+<%
+    }else if (request.getParameter("vista") == null || request.getParameter("vista").isEmpty()) {
+%>
+     <h2> Bienvenido a tu banco, que te banca! </h2>
+<%
+     }
+%>
+>>>>>>> 3028d39 (ultimos cambios)
 
 </div>
 
