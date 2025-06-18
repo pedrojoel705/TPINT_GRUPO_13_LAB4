@@ -12,32 +12,41 @@
 <style type="text/css">
 	<jsp:include page="css\StyleSheet.css"></jsp:include>
 </style>
-
+_
 <title>Home</title>
 
 </head>
-<body>
-
+<body>--
 <jsp:include page="Menu.html"></jsp:include>
 
 <div class="encabezado"></div>
 
-<div class="parteIzq">
+<div class="d-none d-lg-block bg-dark text-white position-fixed h-100" style="width: 250px;">
+  <h4 class="p-3">BancoApp</h4>
+  <div class="list-group list-group-flush">
+  
 
-		<div class="menu">
-		<ul>
-			<li> <a href="Home.jsp"> <span class="fa fa-home"></span> Menú</a> 
-			
-					<ul>
-						<li><a href="login.jsp">Iniciar sesión</a></li>
-					</ul>
-			
-			</li>
-		</ul>
-		</div>
+    <a class="list-group-item list-group-item-action bg-dark text-white" data-bs-toggle="collapse" href="#submenu2">
+      <i class="fa fa-user me-2"></i> Mi Cuenta
+    </a>
+    <div class="collapse" id="submenu2">
+      <a href="login.jsp" class="list-group-item list-group-item-action bg-secondary text-white">Iniciar sesión</a>
+      <a href="perfil.jsp" class="list-group-item list-group-item-action bg-secondary text-white">Mi perfil</a>
+      <a href="cerrarSesion.jsp" class="list-group-item list-group-item-action bg-secondary text-white">Cerrar sesión</a>
+    </div>
 
+    <a href="prestamos.jsp" class="list-group-item list-group-item-action bg-dark text-white">
+      <i class="fa fa-money-bill me-2"></i> Préstamos
+    </a>
+    <a href="transferencias.jsp" class="list-group-item list-group-item-action bg-dark text-white">
+      <i class="fa fa-exchange-alt me-2"></i> Transferencias
+    </a>
+    <a href="contacto.jsp" class="list-group-item list-group-item-action bg-dark text-white">
+      <i class="fa fa-phone me-2"></i> Contacto
+    </a>
+  </div>
 </div>
-<div class="parteDer"> 
+<div class="container-fluid" style="margin-left: 250px; padding: 20px;">
 
 
 <jsp:include page="VistaCliente.jsp"></jsp:include>
